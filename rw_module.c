@@ -216,9 +216,9 @@ static ssize_t rwdev_read(struct file *file, char __user *buf, size_t count, lof
 		size_t n_copied = 0;
 		
 		if(frag->data_len < to_read){ to_read = frag->data_len; }
-		
 		n_copied = copy_to_user(buf, frag->data_ptr, to_read);
 		to_read -= n_copied;
+		buf += to_read;
 		if(frag->data_len == to_read){
 			//Update next word pointer
 			if(curr_elem == elem){ curr_elem = elem->prev; curr_offset = 0;}
@@ -244,6 +244,8 @@ static ssize_t rwdev_read(struct file *file, char __user *buf, size_t count, lof
 	}
 	mutex_unlock(&buff_mutex);
 	
+	printk("RWDEV: Gelesen %lu bytes", read_cnt);
+	
 	return read_cnt;
 }
 
@@ -267,6 +269,8 @@ static ssize_t rwdev_write(struct file *file, const char __user *buf, size_t cou
 	mutex_lock(&buff_mutex);
 	list_add(&buff_frag->list, &buff_head);
 	mutex_unlock(&buff_mutex);
+
+	printk("RWDEV: Geschrieben %lu bytes", count);
 
 	return count;
 
