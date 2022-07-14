@@ -48,7 +48,6 @@ static struct class *rwdev_class = NULL;
 static struct rw_device_data rwdev_data;
 
 static struct list_head buff_head;
-
 static struct timer_list print_timer;
 
 static struct list_head *curr_elem;
@@ -274,12 +273,12 @@ static ssize_t rwdev_write(struct file *file, const char __user *buf, size_t cou
 }
 
 static int rwdev_open(struct inode *inode, struct file *file){
-	//printk("RWDEV: Device open\n");
+	printk("RWDEV: geoefnet\n");
 	return 0;
 }
 
 static int rwdev_release(struct inode *inode, struct file *file){
-	//printk("RWDEV: Device release\n");
+	printk("RWDEV: geschloessen\n");
 	return 0;
 }
 
